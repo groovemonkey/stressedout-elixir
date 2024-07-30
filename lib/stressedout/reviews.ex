@@ -7,6 +7,28 @@ defmodule Stressedout.Reviews do
   alias Stressedout.Repo
 
   alias Stressedout.Reviews.Review
+  alias Stressedout.Users.User
+
+  @doc """
+  get_reviews_for_product fetches all reviews for a product. It includes some extra user information as well.
+  """
+  def get_reviews_for_product(product_id) do
+    Review
+    |> where([r], r.product_id == ^product_id)
+    |> join(:inner, [r], u in User, on: r.user_id == u.id)
+    |> order_by([r], desc: r.inserted_at)
+    |> select([r, u], %{
+      id: r.id,
+      rating: r.rating,
+      content: r.content,
+      inserted_at: r.inserted_at,
+      user: %{
+        id: u.id,
+        name: u.name
+      }
+    })
+    |> Repo.all()
+  end
 
   @doc """
   Returns the list of reviews.

@@ -1,0 +1,12 @@
+<h1>Database Read Test</h1>
+
+<h2>Product: <%= @product.name %></h2>
+<ul>
+  <p>Order count: <%= @orders %></p>
+  <p>Unique user count: <%= @distinct_purchasers %></p>
+</ul>
+<%= for review <- @reviews do %>
+  <p>Username: <%= review.user.name %></p>
+  <p>Rating: <%= review.rating %></p>
+  <p>Content: <%= review.content %></p>
+<% end %>

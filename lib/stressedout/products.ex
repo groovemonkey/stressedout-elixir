@@ -7,6 +7,37 @@ defmodule Stressedout.Products do
   alias Stressedout.Repo
 
   alias Stressedout.Products.Product
+  alias Stressedout.Orders.Order
+
+  @doc """
+  Get a random product.
+  """
+  def get_random_product do
+    query =
+      from p in Product,
+        order_by: fragment("RANDOM()"),
+        limit: 1
+
+    case Repo.one(query) do
+      nil -> {:error, :not_found}
+      product -> {:ok, product}
+    end
+  end
+
+  @doc """
+  Return a count of how many orders have been placed for a product.
+  """
+  def count_distinct_purchasers(product_id) do
+    query =
+      from o in Order,
+        where: o.product_id == ^product_id,
+        select: count(o.user_id, :distinct)
+
+    case Repo.one(query) do
+      nil -> {:error, :not_found}
+      count -> {:ok, count}
+    end
+  end
 
   @doc """
   Returns the list of products.
