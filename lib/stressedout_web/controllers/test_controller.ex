@@ -1,8 +1,9 @@
 defmodule StressedoutWeb.TestController do
   use StressedoutWeb, :controller
-  import Logger
 
   alias Stressedout.Repo
+  require Logger
+
   # alias Stressedout.Products.Product
   # alias Stressedout.Products
   # alias Ecto.Adapters.SQL
@@ -48,7 +49,42 @@ defmodule StressedoutWeb.TestController do
     end
   end
 
-  # TODO write
+  def write(conn, _params) do
+    # get a random product
+    with {:ok, product} <- Stressedout.Products.get_random_product(),
+         {:ok, user} <- Stressedout.Users.get_random_user() do
+      # create an order
+      quantity = Enum.random(0..5)
+
+      attrs = %{
+        date: NaiveDateTime.local_now() |> NaiveDateTime.truncate(:second),
+        user_id: user.id,
+        product_id: product.id,
+        quantity: quantity,
+        total_price: (quantity * product.price) |> Float.round(2)
+      }
+
+      {:ok, order} =
+        %Stressedout.Orders.Order{}
+        |> Stressedout.Orders.Order.changeset(attrs)
+        |> Repo.insert()
+
+      # create a review
+      attrs = %{
+        product_id: product.id,
+        user_id: user.id,
+        rating: Enum.random(1..100),
+        content: Faker.Lorem.paragraph()
+      }
+
+      {:ok, review} =
+        %Stressedout.Reviews.Review{}
+        |> Stressedout.Reviews.Review.changeset(attrs)
+        |> Repo.insert()
+
+      render(conn, "write.html", product: product, user: user, order: order, review: review)
+    end
+  end
 
   def count_orders_for_product(product_id) do
     query = """
@@ -64,15 +100,4 @@ defmodule StressedoutWeb.TestController do
         error
     end
   end
-
-  # def get_reviews_for_product(product_id) do
-  #   query = """
-  #   		SELECT u.name as username, r.rating, r.content
-  #   		FROM reviews r
-  #   		JOIN users u ON r.user_id = u.id
-  #   		WHERE r.product_id = ?
-  #   """
-  #
-  #   Ecto.Adapters.SQL.query(Repo, query, [product_id])
-  #    end
 end

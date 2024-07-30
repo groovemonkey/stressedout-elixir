@@ -9,6 +9,21 @@ defmodule Stressedout.Users do
   alias Stressedout.Users.User
 
   @doc """
+  Get a random user.
+  """
+  def get_random_user do
+    query =
+      from p in User,
+        order_by: fragment("RANDOM()"),
+        limit: 1
+
+    case Repo.one(query) do
+      nil -> {:error, :not_found}
+      user -> {:ok, user}
+    end
+  end
+
+  @doc """
   Returns the list of users.
 
   ## Examples

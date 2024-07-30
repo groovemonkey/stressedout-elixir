@@ -9,8 +9,6 @@ defmodule Stressedout.Orders.Order do
 
     belongs_to :user, Stressedout.Users.User
     belongs_to :product, Stressedout.Products.Product
-    # field :user_id, :integer
-    # field :product_id, :integer
 
     timestamps()
   end
