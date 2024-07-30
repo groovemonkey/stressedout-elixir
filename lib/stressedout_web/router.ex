@@ -21,9 +21,14 @@ defmodule StressedoutWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", StressedoutWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", StressedoutWeb do
+    pipe_through :api
+
+    resources "/users", UserController, except: [:new, :edit]
+    resources "/products", ProductController, except: [:new, :edit]
+    resources "/orders", OrderController, except: [:new, :edit]
+    resources "/reviews", ReviewController, except: [:new, :edit]
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:stressedout, :dev_routes) do
