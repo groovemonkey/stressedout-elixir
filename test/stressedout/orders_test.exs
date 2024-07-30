@@ -8,7 +8,14 @@ defmodule Stressedout.OrdersTest do
 
     import Stressedout.OrdersFixtures
 
-    @invalid_attrs %{id: nil, date: nil, user_id: nil, product_id: nil, quantity: nil, total_price: nil}
+    @invalid_attrs %{
+      id: nil,
+      date: nil,
+      user_id: nil,
+      product_id: nil,
+      quantity: nil,
+      total_price: nil
+    }
 
     test "list_orders/0 returns all orders" do
       order = order_fixture()
@@ -21,7 +28,14 @@ defmodule Stressedout.OrdersTest do
     end
 
     test "create_order/1 with valid data creates a order" do
-      valid_attrs = %{id: "7488a646-e31f-11e4-aace-600308960662", date: ~U[2024-07-29 00:30:00Z], user_id: "7488a646-e31f-11e4-aace-600308960662", product_id: "7488a646-e31f-11e4-aace-600308960662", quantity: 42, total_price: 120.5}
+      valid_attrs = %{
+        id: "7488a646-e31f-11e4-aace-600308960662",
+        date: ~U[2024-07-29 00:30:00Z],
+        user_id: "7488a646-e31f-11e4-aace-600308960662",
+        product_id: "7488a646-e31f-11e4-aace-600308960662",
+        quantity: 42,
+        total_price: 120.5
+      }
 
       assert {:ok, %Order{} = order} = Orders.create_order(valid_attrs)
       assert order.id == "7488a646-e31f-11e4-aace-600308960662"
@@ -38,7 +52,15 @@ defmodule Stressedout.OrdersTest do
 
     test "update_order/2 with valid data updates the order" do
       order = order_fixture()
-      update_attrs = %{id: "7488a646-e31f-11e4-aace-600308960668", date: ~U[2024-07-30 00:30:00Z], user_id: "7488a646-e31f-11e4-aace-600308960668", product_id: "7488a646-e31f-11e4-aace-600308960668", quantity: 43, total_price: 456.7}
+
+      update_attrs = %{
+        id: "7488a646-e31f-11e4-aace-600308960668",
+        date: ~U[2024-07-30 00:30:00Z],
+        user_id: "7488a646-e31f-11e4-aace-600308960668",
+        product_id: "7488a646-e31f-11e4-aace-600308960668",
+        quantity: 43,
+        total_price: 456.7
+      }
 
       assert {:ok, %Order{} = order} = Orders.update_order(order, update_attrs)
       assert order.id == "7488a646-e31f-11e4-aace-600308960668"

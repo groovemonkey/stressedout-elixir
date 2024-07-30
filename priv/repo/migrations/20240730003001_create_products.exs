@@ -3,9 +3,8 @@ defmodule Stressedout.Repo.Migrations.CreateProducts do
 
   def change do
     create table(:products) do
-      # add :id, :uuid
       add :name, :string
-      add :description, :string
+      add :description, :text
       add :price, :float
 
       timestamps()

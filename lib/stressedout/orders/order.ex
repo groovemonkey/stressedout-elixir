@@ -3,12 +3,14 @@ defmodule Stressedout.Orders.Order do
   import Ecto.Changeset
 
   schema "orders" do
-    # field :id, Ecto.UUID
     field :date, :utc_datetime
-    field :user_id, Ecto.UUID
-    field :product_id, Ecto.UUID
     field :quantity, :integer
     field :total_price, :float
+
+    belongs_to :user, Stressedout.Users.User
+    belongs_to :product, Stressedout.Products.Product
+    # field :user_id, :integer
+    # field :product_id, :integer
 
     timestamps()
   end
@@ -16,7 +18,9 @@ defmodule Stressedout.Orders.Order do
   @doc false
   def changeset(order, attrs) do
     order
-    |> cast(attrs, [:id, :user_id, :product_id, :quantity, :total_price, :date])
-    |> validate_required([:id, :user_id, :product_id, :quantity, :total_price, :date])
+    |> cast(attrs, [:user_id, :product_id, :quantity, :total_price, :date])
+    |> validate_required([:user_id, :product_id, :quantity, :total_price, :date])
+    |> assoc_constraint(:user)
+    |> assoc_constraint(:product)
   end
 end

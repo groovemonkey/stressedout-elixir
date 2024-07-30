@@ -21,7 +21,14 @@ defmodule StressedoutWeb.OrderControllerTest do
     quantity: 43,
     total_price: 456.7
   }
-  @invalid_attrs %{id: nil, date: nil, user_id: nil, product_id: nil, quantity: nil, total_price: nil}
+  @invalid_attrs %{
+    id: nil,
+    date: nil,
+    user_id: nil,
+    product_id: nil,
+    quantity: nil,
+    total_price: nil
+  }
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}

@@ -3,11 +3,10 @@ defmodule Stressedout.Repo.Migrations.CreateReviews do
 
   def change do
     create table(:reviews) do
-      # add :id, :uuid
-      add :product_id, :uuid
-      add :user_id, :uuid
+      add :product_id, :integer
+      add :user_id, :integer
       add :rating, :integer
-      add :content, :string
+      add :content, :text
 
       timestamps()
     end

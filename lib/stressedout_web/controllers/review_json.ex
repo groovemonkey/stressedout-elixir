@@ -18,7 +18,6 @@ defmodule StressedoutWeb.ReviewJSON do
   defp data(%Review{} = review) do
     %{
       id: review.id,
-      id: review.id,
       product_id: review.product_id,
       user_id: review.user_id,
       rating: review.rating,

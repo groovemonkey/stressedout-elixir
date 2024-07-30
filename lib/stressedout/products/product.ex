@@ -3,7 +3,6 @@ defmodule Stressedout.Products.Product do
   import Ecto.Changeset
 
   schema "products" do
-    # field :id, Ecto.UUID
     field :name, :string
     field :description, :string
     field :price, :float
@@ -14,7 +13,7 @@ defmodule Stressedout.Products.Product do
   @doc false
   def changeset(product, attrs) do
     product
-    |> cast(attrs, [:id, :name, :description, :price])
-    |> validate_required([:id, :name, :description, :price])
+    |> cast(attrs, [:name, :description, :price])
+    |> validate_required([:name, :description, :price])
   end
 end

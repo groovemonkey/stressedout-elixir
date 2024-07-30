@@ -24,6 +24,17 @@ defmodule StressedoutWeb.Router do
   scope "/api", StressedoutWeb do
     pipe_through :api
 
+    # Seeding endpoints
+    get "/firstrun", SeedController, :firstrun
+    get "/seed", SeedController, :seed
+
+    # Testing endpoints
+    get "/static", TestController, :static
+    get "/dynamic", TestController, :dynamic
+    get "read", TestController, :read
+    get "write", TestController, :write
+
+    # created by the generators I used for schema creation
     resources "/users", UserController, except: [:new, :edit]
     resources "/products", ProductController, except: [:new, :edit]
     resources "/orders", OrderController, except: [:new, :edit]

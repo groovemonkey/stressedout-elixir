@@ -21,7 +21,13 @@ defmodule Stressedout.ReviewsTest do
     end
 
     test "create_review/1 with valid data creates a review" do
-      valid_attrs = %{id: "7488a646-e31f-11e4-aace-600308960662", product_id: "7488a646-e31f-11e4-aace-600308960662", user_id: "7488a646-e31f-11e4-aace-600308960662", rating: 42, content: "some content"}
+      valid_attrs = %{
+        id: "7488a646-e31f-11e4-aace-600308960662",
+        product_id: "7488a646-e31f-11e4-aace-600308960662",
+        user_id: "7488a646-e31f-11e4-aace-600308960662",
+        rating: 42,
+        content: "some content"
+      }
 
       assert {:ok, %Review{} = review} = Reviews.create_review(valid_attrs)
       assert review.id == "7488a646-e31f-11e4-aace-600308960662"
@@ -37,7 +43,14 @@ defmodule Stressedout.ReviewsTest do
 
     test "update_review/2 with valid data updates the review" do
       review = review_fixture()
-      update_attrs = %{id: "7488a646-e31f-11e4-aace-600308960668", product_id: "7488a646-e31f-11e4-aace-600308960668", user_id: "7488a646-e31f-11e4-aace-600308960668", rating: 43, content: "some updated content"}
+
+      update_attrs = %{
+        id: "7488a646-e31f-11e4-aace-600308960668",
+        product_id: "7488a646-e31f-11e4-aace-600308960668",
+        user_id: "7488a646-e31f-11e4-aace-600308960668",
+        rating: 43,
+        content: "some updated content"
+      }
 
       assert {:ok, %Review{} = review} = Reviews.update_review(review, update_attrs)
       assert review.id == "7488a646-e31f-11e4-aace-600308960668"

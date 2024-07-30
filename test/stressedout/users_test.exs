@@ -21,7 +21,11 @@ defmodule Stressedout.UsersTest do
     end
 
     test "create_user/1 with valid data creates a user" do
-      valid_attrs = %{id: "7488a646-e31f-11e4-aace-600308960662", name: "some name", address: "some address"}
+      valid_attrs = %{
+        id: "7488a646-e31f-11e4-aace-600308960662",
+        name: "some name",
+        address: "some address"
+      }
 
       assert {:ok, %User{} = user} = Users.create_user(valid_attrs)
       assert user.id == "7488a646-e31f-11e4-aace-600308960662"
@@ -35,7 +39,12 @@ defmodule Stressedout.UsersTest do
 
     test "update_user/2 with valid data updates the user" do
       user = user_fixture()
-      update_attrs = %{id: "7488a646-e31f-11e4-aace-600308960668", name: "some updated name", address: "some updated address"}
+
+      update_attrs = %{
+        id: "7488a646-e31f-11e4-aace-600308960668",
+        name: "some updated name",
+        address: "some updated address"
+      }
 
       assert {:ok, %User{} = user} = Users.update_user(user, update_attrs)
       assert user.id == "7488a646-e31f-11e4-aace-600308960668"

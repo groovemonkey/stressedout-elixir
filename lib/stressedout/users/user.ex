@@ -3,7 +3,6 @@ defmodule Stressedout.Users.User do
   import Ecto.Changeset
 
   schema "users" do
-    # field :id, Ecto.UUID
     field :name, :string
     field :address, :string
 
@@ -13,7 +12,7 @@ defmodule Stressedout.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:id, :name, :address])
-    |> validate_required([:id, :name, :address])
+    |> cast(attrs, [:name, :address])
+    |> validate_required([:name, :address])
   end
 end

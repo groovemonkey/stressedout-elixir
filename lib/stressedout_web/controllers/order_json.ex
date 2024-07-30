@@ -18,7 +18,6 @@ defmodule StressedoutWeb.OrderJSON do
   defp data(%Order{} = order) do
     %{
       id: order.id,
-      id: order.id,
       user_id: order.user_id,
       product_id: order.product_id,
       quantity: order.quantity,

@@ -18,7 +18,6 @@ defmodule StressedoutWeb.ProductJSON do
   defp data(%Product{} = product) do
     %{
       id: product.id,
-      id: product.id,
       name: product.name,
       description: product.description,
       price: product.price

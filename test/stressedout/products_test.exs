@@ -21,7 +21,12 @@ defmodule Stressedout.ProductsTest do
     end
 
     test "create_product/1 with valid data creates a product" do
-      valid_attrs = %{id: "7488a646-e31f-11e4-aace-600308960662", name: "some name", description: "some description", price: 120.5}
+      valid_attrs = %{
+        id: "7488a646-e31f-11e4-aace-600308960662",
+        name: "some name",
+        description: "some description",
+        price: 120.5
+      }
 
       assert {:ok, %Product{} = product} = Products.create_product(valid_attrs)
       assert product.id == "7488a646-e31f-11e4-aace-600308960662"
@@ -36,7 +41,13 @@ defmodule Stressedout.ProductsTest do
 
     test "update_product/2 with valid data updates the product" do
       product = product_fixture()
-      update_attrs = %{id: "7488a646-e31f-11e4-aace-600308960668", name: "some updated name", description: "some updated description", price: 456.7}
+
+      update_attrs = %{
+        id: "7488a646-e31f-11e4-aace-600308960668",
+        name: "some updated name",
+        description: "some updated description",
+        price: 456.7
+      }
 
       assert {:ok, %Product{} = product} = Products.update_product(product, update_attrs)
       assert product.id == "7488a646-e31f-11e4-aace-600308960668"
