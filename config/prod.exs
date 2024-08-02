@@ -15,8 +15,8 @@ config :stressedout, StressedoutWeb.Endpoint,
 # Configures Swoosh API Client
 config :swoosh, api_client: Swoosh.ApiClient.Finch, finch_name: Stressedout.Finch
 
-# Do not print debug messages in production
-config :logger, level: :info
+# be stoic in production
+config :logger, level: :error
 
 # Runtime production configuration, including reading
 # of environment variables, is done on config/runtime.exs.
