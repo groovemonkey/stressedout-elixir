@@ -2,7 +2,15 @@
 
 A small web application that is designed to be stress-tested on various infrastructures, to measure performance.
 
-## Setup
+## Run as a container
+
+```bash
+docker compose -f docker-compose.yml up --force-recreate --build --remove-orphans
+```
+
+The container config is written so that each container automatically tries to run migrations as it starts up.
+
+## Local Dev Setup
 
 Run the postgres container:
 
@@ -20,18 +28,18 @@ Connect to pg with `psql -h localhost -p 5432 -U postgres -d stressedout`
 
 Delete with `docker kill pg_stressedout`
 
-### Seeding
+## Seed
 
-```bash
-curl http://localhost:4000/seed
-```
+Just load the seed endpoint:
+
+`curl http://localhost:4000/api/seed`
 
 ## Routes
 
 * [Static pages](http://localhost:4000/static)
 * [Dynamic pages (no DB)](http://localhost:4000/dynamic)
-* [Dynamic pages (db reads)](http://localhost:4000/db-read)
-* [Dynamic pages (db writes)](http://localhost:4000/db-write)
+* [Dynamic pages (db reads)](http://localhost:4000/read)
+* [Dynamic pages (db writes)](http://localhost:4000/write)
 
 ## Perf test output
 

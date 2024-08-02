@@ -24,10 +24,6 @@ defmodule StressedoutWeb.TestController do
     {:ok, product} = Stressedout.Products.get_random_product()
     testreviews = Stressedout.Reviews.get_reviews_for_product(product.id)
 
-    IO.puts(
-      "Nice. Product: #{inspect(product)}\nSample review from #{length(testreviews)} reviews: #{inspect(Enum.at(testreviews, 0))}"
-    )
-
     with {:ok, product} <- Stressedout.Products.get_random_product(),
          {:ok, count} <- count_orders_for_product(product.id),
          {:ok, distinct_purchasers} <- Stressedout.Products.count_distinct_purchasers(product.id),
