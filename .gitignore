@@ -35,3 +35,33 @@ stressedout-*.tar
 npm-debug.log
 /assets/node_modules/
 
+# Terraform
+# Local .terraform directories
+**/.terraform/
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# Crash log files
+crash.log
+
+# Extension files for various editors
+*.tfvars
+*.tfvars.json
+
+# Terraform plan output files
+*.tfplan
+
+# Override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# .terraformrc file
+.terraformrc
+terraform.rc
+.terraform.lock.hcl
+
