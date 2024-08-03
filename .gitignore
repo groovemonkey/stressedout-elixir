@@ -35,4 +35,3 @@ stressedout-*.tar
 npm-debug.log
 /assets/node_modules/
 
-rel/**
