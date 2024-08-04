@@ -67,6 +67,12 @@ doas docker run --rm --name pg_stressedout \
   -d -p 5432:5432 postgres
 ```
 
+If you want to stop/recreate this container (for example to run the test against the second web app), just stop it:
+
+```bash
+doas docker stop pg_stressedout
+```
+
 
 ### Test the Elixir webapp
 
@@ -82,8 +88,6 @@ doas docker build -t stressedout-elixir .
 ```
 
 
-Ensure that the `$DB_SERVER` is set to the database server's IP address before running the following commands.
-
 The Phoenix web application requires a secret string to start, so if you have elixir, mix, and phoenix installed locally, you can generate such a string with `mix phx.gen.secret`. The vast majority of you will want to skip that, and just use this one that I've pre-generated for you (I suspect you can use any 64-character UTF-8 string but I'm not sure):
 
 ```bash
@@ -91,6 +95,8 @@ export YOUR_SECRET_KEY_BASE=tNbgJQPPiNOTSECURENOTSECURENOTSECUREWWH+aPL3FQ+u/f0H
 ```
 
 This is used for things like signing cookies and other webapp-related things, but this is a test application so it doesn't matter. Obviously, don't go using that on your production Phoenix web applications.
+
+Ensure that the `$DB_SERVER` is set to the database server's IP address before running the following command.
 
 ```bash
 doas docker run --rm --name stressedout \
@@ -102,11 +108,23 @@ doas docker run --rm --name stressedout \
 
 #### On the bastion host
 
+Create the lua script for `wrk`:
+
 ```bash
-cd
-git clone https://github.com/groovemonkey/stressedout-go.git
-go mod tidy
-go build .
+cat << EOF >> test_endpoints.lua
+math.randomseed(12345)
+
+-- List of endpoints
+local endpoints = { "/", "/dynamic", "/read", "/write" }
+
+-- Function to generate a random request
+request = function()
+	-- Select a random endpoint
+	local endpoint = endpoints[math.random(#endpoints)]
+	-- Return the request object
+	return wrk.format("GET", endpoint)
+end
+EOF
 ```
 
 Ensure that the `$WEB_HOST` shell variable is set. Now you're ready to seed the database (via the webapp) and run the load test!
@@ -137,11 +155,12 @@ Clone the application and build a binary.
 ```bash
 cd
 git clone https://github.com/groovemonkey/stressedout-go.git
+cd stressedout-go
 go mod tidy
 go build .
 ```
 
-Ensure that the `$DB_SERVER` is set to the database server's IP address before running the following commands.
+Ensure that the `$DB_SERVER` is set to the database server's IP address before running the following commands. (If you just ran a test with Elixir, ensure that you stop/remove and recreate the postgres container on the DB server as well, with `doas docker stop pg_stressedout`.)
 
 Export the environment variables that the Go web application expects to be started with.
 
@@ -179,6 +198,6 @@ curl http://$WEB_HOST/seed
 curl http://$WEB_HOST/read
 
 # Run the test
-wrk -t12 -c400 -d30s -s ./test_endpoints.lua http://$WEB_HOST:8080/
+wrk -t12 -c400 -d30s -s ./test_endpoints.lua http://$WEB_HOST/
 ```
 
