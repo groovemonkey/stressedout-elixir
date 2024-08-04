@@ -131,7 +131,7 @@ resource "aws_instance" "web_server" {
     volume_size = 50
   }
 
-  user_data = file("${path.module}/install_docker.sh")
+  user_data = file("${path.module}/install_software.sh")
 
   tags = {
     Name = "load-test-web-server"
@@ -151,7 +151,7 @@ resource "aws_instance" "db_server" {
     volume_size = 50
   }
 
-  user_data = file("${path.module}/install_docker.sh")
+  user_data = file("${path.module}/install_software.sh")
 
   tags = {
     Name = "load-test-db-server"

@@ -33,7 +33,8 @@ if config_env() == :prod do
   config :stressedout, Stressedout.Repo,
     # ssl: true,
     url: database_url,
-    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
+    pool_size: String.to_integer(System.get_env("REPO_POOL_SIZE") || "100"),
+    queue_target: String.to_integer(System.get_env("REPO_QUEUE_TARGET") || "500"),
     socket_options: maybe_ipv6
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
