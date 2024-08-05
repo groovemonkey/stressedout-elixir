@@ -84,17 +84,13 @@ resource "aws_security_group" "private" {
 # EC2 Instances
 # TODO break out separate alpine datasource
 # https://alpinelinux.org/cloud/
-data "aws_ami" "ubuntu" {
+data "aws_ami" "alpine" {
   most_recent = true
-  # owners      = ["099720109477"] # Canonical
-  owners = ["538276064493"] # Alpine
+  owners      = ["538276064493"] # Alpine
 
 
   filter {
-    name = "name"
-    # values = ["ubuntu/images/hvm-ssd/ubuntu-*-*-amd64-server-*"]
-    # 24.04 doesn't exist for some reason in us-west-2
-    # values = ["ubuntu/images/hvm-ssd/ubuntu-24.04-amd64-server-*"]
+    name   = "name"
     values = ["alpine-3.20.2-x86_64-bios-cloudinit-r0"]
   }
 
@@ -105,7 +101,7 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_instance" "bastion" {
-  ami           = data.aws_ami.ubuntu.id
+  ami           = data.aws_ami.alpine.id
   instance_type = "t3.micro"
   key_name      = var.key_name
 
@@ -119,8 +115,8 @@ resource "aws_instance" "bastion" {
 }
 
 resource "aws_instance" "web_server" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "c6i.2xlarge" # 8 vCPUs, 16 GiB RAM, intel CPU. ~$0.34/hr
+  ami           = data.aws_ami.alpine.id
+  instance_type = "c6i.4xlarge" # 16 vCPUs, 32 GiB RAM, intel CPU. ~$0.68/hr
   key_name      = var.key_name
 
   subnet_id              = aws_subnet.private.id
@@ -139,7 +135,7 @@ resource "aws_instance" "web_server" {
 }
 
 resource "aws_instance" "db_server" {
-  ami           = data.aws_ami.ubuntu.id
+  ami           = data.aws_ami.alpine.id
   instance_type = "c6i.4xlarge" # 16 vCPUs, 32 GiB RAM, intel CPU. ~$0.68/hr
   key_name      = var.key_name
 
