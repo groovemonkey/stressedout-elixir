@@ -117,10 +117,4 @@ Woof, look at those errors. I think it ran out of file handles. Anyway, it looks
 
 ## Thoughts
 
-- Add indexes to both the Elixir AND Go app-generated schemas, measure speedup.
-  - add an index on Review.user_id and Review.product_id (make review lookups fast)
-  - add an index on Order.user_id and Order.product_id (make order lookups fast)
-
-- When the database was the limiting factor (the c5.xlarge I was originally using choked immediately), Elixir returned a lot more errors. I think it's because of a suboptimal read timeout setting in Phoenix -- 100ms timeout on reads is way too low. I'll fix this by jiggling :queue_target and :queue_interval in Phoenix.
-
 - It might be cool to use bandit instead of cowboy: <https://github.com/mtrudel/bandit?tab=readme-ov-file> (is it faster? My guess is "not really" since I don't think that the web serving is a huge part of the time spent by the app.)
