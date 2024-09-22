@@ -109,6 +109,8 @@ resource "aws_instance" "bastion" {
   vpc_security_group_ids      = [aws_security_group.bastion.id]
   associate_public_ip_address = true
 
+  user_data = file("install_software.sh")
+
   tags = {
     Name = "load-test-bastion"
   }
@@ -127,7 +129,7 @@ resource "aws_instance" "web_server" {
     volume_size = 50
   }
 
-  user_data = file("${path.module}/install_software.sh")
+  user_data = file("install_software.sh")
 
   tags = {
     Name = "load-test-web-server"
@@ -147,7 +149,7 @@ resource "aws_instance" "db_server" {
     volume_size = 50
   }
 
-  user_data = file("${path.module}/install_software.sh")
+  user_data = file("install_software.sh")
 
   tags = {
     Name = "load-test-db-server"
