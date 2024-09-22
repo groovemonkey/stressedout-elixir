@@ -67,6 +67,9 @@ ssh $DB_HOST
 Start the docker container.
 
 ```bash
+# the docker service often fails to start via cloud-init
+service docker start
+
 doas docker run --rm --name pg_stressedout \
   -e POSTGRES_PASSWORD=postgres \
   -e POSTGRES_DB=stressedout \
@@ -82,12 +85,20 @@ doas docker stop pg_stressedout
 
 ### Test the Elixir webapp
 
+From your bastion host, SSH into your db host.
+
+```bash
+ssh $WEB_HOST
+```
+
 #### On the web server
 
 Clone the application and build a docker container.
 
 ```bash
-cd
+# the docker service often fails to start via cloud-init
+service docker start
+
 git clone https://github.com/groovemonkey/stressedout-elixir.git
 cd stressedout-elixir
 doas docker build -t stressedout-elixir .
