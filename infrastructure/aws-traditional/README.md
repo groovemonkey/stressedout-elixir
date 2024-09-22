@@ -68,7 +68,7 @@ Start the docker container.
 
 ```bash
 # the docker service often fails to start via cloud-init
-service docker start
+doas service docker start
 
 doas docker run --rm --name pg_stressedout \
   -e POSTGRES_PASSWORD=postgres \
@@ -97,7 +97,7 @@ Clone the application and build a docker container.
 
 ```bash
 # the docker service often fails to start via cloud-init
-service docker start
+doas service docker start
 
 git clone https://github.com/groovemonkey/stressedout-elixir.git
 cd stressedout-elixir
