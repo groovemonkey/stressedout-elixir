@@ -10,7 +10,7 @@ Traditional AWS infrastructure is simply two VMs in a private subnet on AWS, wit
 chmod 600 /path/to/keyfile.pem
 ```
 
-1. In the IAM settings, create a new user with programmatic access and attach the `AmazonEC2FullAccess` policy to it. Download the credentials (`AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`) and save them in a safe place.
+1. In the [IAM settings](https://us-east-1.console.aws.amazon.com/iam/home?region=us-west-2#/users), create a new user with programmatic access and attach the `AmazonEC2FullAccess` policy to it. Download the credentials (`AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`) and save them in a safe place.
 
 1. Export these API credentials as environment variables in the same shell that you're going to run the terraform commands in.
 
